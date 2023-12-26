@@ -1,0 +1,43 @@
+ion-content {
+    --background: #052c47; /* Color de fondo deseado para el contenido */
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh; /* Ajusta el contenedor a la altura total de la pantalla */
+}
+
+.header-icon {
+    font-size: 50px;
+    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
+    margin-left:5px;
+}
+
+.header-icon2 {
+    font-size: 50px;
+    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
+    margin-left:250px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.button-icon {
+    font-size: 40px;
+    margin-right: 10px;
+    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
+}
+
+.custom-button {
+    width: 180px;
+    height: 70px;
+    --background: #yourButtonColor; /* Reemplaza 'yourButtonColor' con el color que desees para el fondo del botón */
+    color: #ffffff; /* Reemplaza 'yourTextColor' con el color que desees para el texto del botón */
+}

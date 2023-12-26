@@ -1,0 +1,30 @@
+ion-content {
+    --background: #052c47; /* Color de fondo deseado para el contenido */
+  }
+  .header-icon {
+    font-size: 50px;
+    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
+    margin-left:5px;
+}
+
+.header-icon2 {
+    font-size: 50px;
+    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
+    margin-left:250px;
+} 
+
+.ley{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 200px;
+    margin-top: 100px;
+}
+ion-button {
+    display: block;
+    margin: 0 auto; /* Esto centra el botón horizontalmente */
+    width: 180px;
+    height: 50px;
+    color: #ffffff; /* Reemplaza 'yourTextColor' con el color que desees para el texto del botón */
+  }
