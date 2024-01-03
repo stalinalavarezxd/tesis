@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { Page3PageRoutingModule } from './page3-routing.module';
-
+import { HttpClientModule } from '@angular/common/http';
 import { Page3Page } from './page3.page';
 
 @NgModule({
@@ -13,7 +13,9 @@ import { Page3Page } from './page3.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    Page3PageRoutingModule
+    Page3PageRoutingModule,
+    HttpClientModule,
+    
   ],
   declarations: [Page3Page]
 })

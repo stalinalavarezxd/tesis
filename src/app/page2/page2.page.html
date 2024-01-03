@@ -1,13 +1,14 @@
-<ion-content [fullscreen]="true">
-  <div id="barra">
-  <ion-icon [routerLink]="['/page1']" name="arrow-back-outline" class="header-icon"  ></ion-icon>
-  <ion-icon name="help-circle-outline" class="header-icon2" ></ion-icon>
-  </div>
-   <!-- Botones centrados con icono de cámara -->
-   <div class="camara">
-    <ion-icon name="camera-outline" class="button-icon"></ion-icon>
-   
-  </div>
+<!-- page2.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Página 2
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-
+<ion-content>
+  <video #videoElement style="display: none;"></video>
+  <input type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none;">
+  <canvas #canvas></canvas>
 </ion-content>

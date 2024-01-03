@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'page4',
     loadChildren: () => import('./page4/page4.module').then( m => m.Page4PageModule)
+  },  {
+    path: 'image-detail',
+    loadChildren: () => import('./image-detail/image-detail.module').then( m => m.ImageDetailPageModule)
   },
+
 ];
 
 @NgModule({
