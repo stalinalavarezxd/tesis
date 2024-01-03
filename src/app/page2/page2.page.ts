@@ -11,7 +11,7 @@ export class Page2Page {
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
   private video!: HTMLVideoElement;
   private intervalId: any;
-  private captureInterval = 2000; // Intervalo de captura en milisegundos
+  private captureInterval = 2000; 
   private mediaStream!: MediaStream;
 
   constructor(private flaskApiService: FlaskApiService) {}
@@ -100,7 +100,7 @@ export class Page2Page {
   }
 
   handleFileInput(event: any): void {
-    // Lógica para manejar la selección de archivos
+
   }
 
   ngOnDestroy() {
