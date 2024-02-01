@@ -20,6 +20,15 @@ export class FlaskApiService {
       formData.append('image_file', file, 'image_file');
     }
 
-    return this.http.post(`${this.apiUrl}/detect`, formData).toPromise();
+    return this.http.post(`${this.apiUrl}/detect`, formData)
+      .toPromise()
+      .then(response => {
+        console.log('Respuesta del servidor:', response); // Imprimir la respuesta en la consola
+        return response;
+      })
+      .catch(error => {
+        console.error('Error en la solicitud al servidor:', error);
+        throw error; // Re-lanzar el error para que se maneje en el código que llamó a detectObjects
+      });
   }
 }

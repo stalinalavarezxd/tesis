@@ -1,35 +1,45 @@
 // page2.page.ts
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FlaskApiService } from './FlaskApiService';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-page2',
   templateUrl: 'page2.page.html',
   styleUrls: ['page2.page.scss'],
 })
-export class Page2Page {
+export class Page2Page implements OnDestroy {
+  @ViewChild('video', { static: true }) video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
-  private video!: HTMLVideoElement;
   private intervalId: any;
-  private captureInterval = 2000; 
+  private captureInterval = 1000;
   private mediaStream!: MediaStream;
+  public detectionResults: any[] = [];
+  private lastDrawnBoxes: any[] = [];
+  private apiUrl = 'https://us-central1-backend-reconocimiento.cloudfunctions.net/app/modelos';
+  public detectedObjectInfo: any = null;
 
-  constructor(private flaskApiService: FlaskApiService) {}
+  constructor(
+    private flaskApiService: FlaskApiService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
-    this.video = document.createElement('video');
     this.setupCamera();
   }
 
-  async setupCamera(): Promise<void> {
-    try {
-      this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      this.video.srcObject = this.mediaStream;
-      await this.video.play();
-      this.startCapture();
-    } catch (error) {
-      console.error('Error accessing camera:', error);
-    }
+  setupCamera(): void {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        this.mediaStream = stream;
+        this.video.nativeElement.srcObject = stream;
+        this.video.nativeElement.play();
+        this.startCapture();
+      })
+      .catch((error) => {
+        console.error('Error accessing camera:', error);
+      });
   }
 
   startCapture(): void {
@@ -42,47 +52,73 @@ export class Page2Page {
     const canvasElement = this.canvas.nativeElement;
     const ctx = canvasElement.getContext('2d');
 
-    canvasElement.width = this.video.videoWidth;
-    canvasElement.height = this.video.videoHeight;
-    ctx!.drawImage(this.video, 0, 0, canvasElement.width, canvasElement.height);
+    canvasElement.width = this.video.nativeElement.videoWidth;
+    canvasElement.height = this.video.nativeElement.videoHeight;
 
-    const imageData = canvasElement.toDataURL('image/jpeg'); // Obtener datos de la imagen en formato base64
+    // Dibujar la imagen de la cámara en el canvas
+    ctx!.drawImage(
+      this.video.nativeElement,
+      0,
+      0,
+      canvasElement.width,
+      canvasElement.height
+    );
 
+    const imageData = canvasElement.toDataURL('image/jpeg');
     const blob = this.dataURLtoBlob(imageData);
     const file = new File([blob], 'captured_image.jpg');
 
     try {
       const boxes = await this.flaskApiService.detectObjects(file);
-      this.drawImageAndBoxes(file, boxes);
-      console.log('Detection Results:', boxes);
+
+      if (boxes.length > 0 || this.detectionResults.length > 0) {
+        // Solo actualizar la detección si hay nuevos resultados o si hay resultados anteriores
+        this.detectionResults = boxes;
+        this.detectObjectInfo();
+        this.drawImageAndBoxes();
+        console.log('Detection Results:', boxes);
+      }
     } catch (error) {
       console.error('Error during detection:', error);
     }
   }
 
-  drawImageAndBoxes(file: File, boxes: any[]): void {
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
+  async detectObjectInfo(): Promise<void> {
+    if (this.detectionResults.length > 0) {
+      const detectedLabel = this.detectionResults[0][4]; // Obtener el label del primer resultado
 
-    img.onload = () => {
-      const canvasElement = this.canvas.nativeElement;
-      const ctx = canvasElement.getContext('2d');
+      try {
+        const apiResponse = await this.http.get<any[]>(this.apiUrl).toPromise();
+        const matchingObject = apiResponse!.find((obj) => obj.name === detectedLabel);
 
-      ctx!.drawImage(img, 0, 0);
+        if (matchingObject) {
+          this.detectedObjectInfo = matchingObject;
+        } else {
+          this.detectedObjectInfo = null;
+        }
+      } catch (error) {
+        console.error('Error fetching data from API:', error);
+      }
+      
+    }
+    
+  }
 
-      ctx!.strokeStyle = '#00FF00';
-      ctx!.lineWidth = 3;
-      ctx!.font = '18px serif';
+  drawImageAndBoxes(): void {
+    const canvasElement = this.canvas.nativeElement;
+    const ctx = canvasElement.getContext('2d');
 
-      boxes.forEach(([x1, y1, x2, y2, label]) => {
-        ctx!.strokeRect(x1, y1, x2 - x1, y2 - y1);
-        ctx!.fillStyle = '#00ff00';
-        const width = ctx!.measureText(label).width;
-        ctx!.fillRect(x1, y1, width + 10, 25);
-        ctx!.fillStyle = '#000000';
-        ctx!.fillText(label, x1, y1 + 18);
-      });
-    };
+    // Limpiar el canvas
+    ctx!.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+    // Dibujar la imagen de la cámara en el canvas
+    ctx!.drawImage(
+      this.video.nativeElement,
+      0,
+      0,
+      canvasElement.width,
+      canvasElement.height
+    );
   }
 
   dataURLtoBlob(dataURL: string): Blob {
@@ -99,12 +135,11 @@ export class Page2Page {
     return new Blob([u8arr], { type: mime });
   }
 
-  handleFileInput(event: any): void {
-
-  }
-
   ngOnDestroy() {
     clearInterval(this.intervalId);
-    this.mediaStream.getTracks().forEach(track => track.stop());
+
+    if (this.mediaStream) {
+      this.mediaStream.getTracks().forEach(track => track.stop());
+    }
   }
 }

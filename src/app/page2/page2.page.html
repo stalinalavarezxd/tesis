@@ -1,14 +1,25 @@
 <!-- page2.page.html -->
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Página 2
-    </ion-title>
-  </ion-toolbar>
+  <div id="barra">
+    <ion-icon [routerLink]="['/page1']" name="arrow-back-outline" class="header-icon"></ion-icon>
+    <ion-icon name="help-circle-outline" class="header-icon2"></ion-icon>
+  </div>
 </ion-header>
 
-<ion-content>
-  <video #videoElement style="display: none;"></video>
-  <input type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none;">
-  <canvas #canvas></canvas>
+<ion-content class="ion-padding">
+  <div class="camera-container">
+    <video #video autoplay playsinline></video>
+    <canvas #canvas></canvas>
+  </div>
+  <div class="detection-results">
+    <div *ngFor="let box of detectionResults">
+      <div class="object-info">
+        <!-- Mostrar imagen si hay información del objeto detectado -->
+        <ng-container *ngIf="detectedObjectInfo && detectedObjectInfo.imagen">
+          <img [src]="detectedObjectInfo.imagen" alt="Detected Object Image" />
+          <p>{{ detectedObjectInfo.descripcion }}</p>
+        </ng-container>
+      </div>
+    </div>
+  </div>
 </ion-content>

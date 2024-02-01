@@ -22,3 +22,37 @@ ion-content {
     margin-top: 150px;
 }
 /* page2.page.scss */
+.camera-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Usar el 100% de la altura visible del dispositivo */
+    overflow: hidden;
+  }
+  
+  video {
+    width: 100%;
+    height: auto;
+  }
+  
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .detection-results {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #ffffff;
+    z-index: 1000; /* Asegura que la información de detección esté encima de la cámara */
+  }
+  
+  .object-info {
+    
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  
