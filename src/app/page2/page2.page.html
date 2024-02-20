@@ -1,6 +1,7 @@
 <!-- page2.page.html -->
 <ion-header>
   <div id="barra">
+    
     <ion-icon [routerLink]="['/page1']" name="arrow-back-outline" class="header-icon"></ion-icon>
     <ion-icon name="help-circle-outline" class="header-icon2"></ion-icon>
   </div>
@@ -17,7 +18,9 @@
         <!-- Mostrar imagen si hay información del objeto detectado -->
         <ng-container *ngIf="detectedObjectInfo && detectedObjectInfo.imagen">
           <img [src]="detectedObjectInfo.imagen" alt="Detected Object Image" />
-          <p>{{ detectedObjectInfo.descripcion }}</p>
+          <div class="description-container">
+            <p class="description">{{ detectedObjectInfo.descripcion }}</p>
+          </div>
         </ng-container>
       </div>
     </div>
