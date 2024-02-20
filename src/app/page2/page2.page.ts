@@ -18,7 +18,9 @@ export class Page2Page implements OnDestroy {
   private lastDrawnBoxes: any[] = [];
   private apiUrl = 'https://us-central1-backend-reconocimiento.cloudfunctions.net/app/modelos';
   public detectedObjectInfo: any = null;
-
+  //private currentCamera = 'user';
+  private currentCamera = 'environment'; // 'environment' para cámara trasera, 'user' para cámara frontal
+  public currentCameraIcon = 'camera-reverse'; 
   constructor(
     private flaskApiService: FlaskApiService,
     private http: HttpClient
@@ -27,10 +29,14 @@ export class Page2Page implements OnDestroy {
   ngOnInit() {
     this.setupCamera();
   }
-
+  toggleCamera(): void {
+    this.currentCamera = this.currentCamera === 'environment' ? 'user' : 'environment';
+    this.currentCameraIcon = this.currentCamera === 'environment' ? 'camera-reverse' : 'camera';
+    this.setupCamera();
+  }
   setupCamera(): void {
     navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({ video: { facingMode: this.currentCamera } })
       .then((stream) => {
         this.mediaStream = stream;
         this.video.nativeElement.srcObject = stream;
@@ -41,6 +47,7 @@ export class Page2Page implements OnDestroy {
         console.error('Error accessing camera:', error);
       });
   }
+
 
   startCapture(): void {
     this.intervalId = setInterval(() => {
@@ -135,7 +142,7 @@ export class Page2Page implements OnDestroy {
     return new Blob([u8arr], { type: mime });
   }
 
-  ngOnDestroy() {
+   ngOnDestroy() {
     clearInterval(this.intervalId);
 
     if (this.mediaStream) {
