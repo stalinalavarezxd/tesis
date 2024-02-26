@@ -2,7 +2,7 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FlaskApiService } from './FlaskApiService';
 import { HttpClient } from '@angular/common/http';
-
+import { ModalService } from '../modal.service'; // Asegúrate de especificar la ruta correcta
 @Component({
   selector: 'app-page2',
   templateUrl: 'page2.page.html',
@@ -22,6 +22,7 @@ export class Page2Page implements OnDestroy {
   private currentCamera = 'environment'; // 'environment' para cámara trasera, 'user' para cámara frontal
   public currentCameraIcon = 'camera-reverse'; 
   constructor(
+    private modalService: ModalService,
     private flaskApiService: FlaskApiService,
     private http: HttpClient
   ) {}
@@ -148,5 +149,8 @@ export class Page2Page implements OnDestroy {
     if (this.mediaStream) {
       this.mediaStream.getTracks().forEach(track => track.stop());
     }
+  }
+  openModalPage2() {
+    this.modalService.openModalPage2();
   }
 }

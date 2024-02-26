@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from '../modal.service';
 
 @Component({
   selector: 'app-page4',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Page4Page implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: ModalService) {}
 
   ngOnInit() {
   }
 
+  openManualTransitoModal() {
+    this.modalService.openManualTransitoModal();
+  }
+  
 }

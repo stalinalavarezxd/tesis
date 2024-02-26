@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ImageDetailPage } from '../image-detail/image-detail.page';
 import { ModalController } from '@ionic/angular';
+import { YourHelpModalComponent } from '../your-help-modal/your-help-modal.component';
 @Component({
   selector: 'app-page3',
   templateUrl: 'page3.page.html',
@@ -30,6 +31,7 @@ export class Page3Page implements OnInit {
     });
   }
   
+  
   async showImageDetail(item: any) {
     const modal = await this.modalController.create({
       component: ImageDetailPage,
@@ -38,6 +40,18 @@ export class Page3Page implements OnInit {
         name: item.nombre,
         description: item.descripcion
       }
+    });
+
+    return await modal.present();
+  }
+
+   // Nuevo método para mostrar el modal de información de ayuda
+   async showHelpModal() {
+    const modal = await this.modalController.create({
+      component: YourHelpModalComponent, // Reemplaza 'YourHelpModalComponent' con el nombre real de tu componente de ayuda
+      componentProps: {
+        // Puedes pasar propiedades adicionales si es necesario
+      },
     });
 
     return await modal.present();

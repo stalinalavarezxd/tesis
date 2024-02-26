@@ -1,0 +1,43 @@
+/* page3.page.scss */
+
+ion-header {
+    --background: #052c47;
+    ion-toolbar {
+      --background: #052c47;
+      ion-title {
+        color: #0095ff;
+      }
+      ion-buttons {
+        ion-button {
+          ion-icon {
+            color: #0095ff;
+          }
+        }
+      }
+    }
+  }
+  
+  ion-content {
+    --background: #052c47;
+  }
+  
+  .full-size-image {
+    width: 100%;
+    max-width: 60vw;  /* Ajusta el porcentaje según tus preferencias */
+    height: auto;
+    display: block;
+    margin: 20px auto 0;
+  }
+  
+  ion-card {
+    --background: #052c47;
+    ion-card-header {
+      ion-card-title {
+        color: #0095ff;
+      }
+    }
+    ion-card-content {
+      color: #ffffff;
+    }
+  }
+  

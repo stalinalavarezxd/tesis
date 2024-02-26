@@ -1,45 +1,64 @@
+/* page3.page.scss */
+
 ion-content {
-    --background: #052c47; /* Color de fondo deseado para el contenido */
-  }
-  
-  
-  .header-icon {
-    font-size: 50px;
-    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
-    margin-left:5px;
+  --background: #052c47;
+}
+
+.header-icon {
+  font-size: 50px;
+  color: #0095ff;
+  margin-left: 5px;
 }
 
 .header-icon2 {
-    font-size: 50px;
-    color: #0095ff; /* Reemplaza 'yourColor' con el color que desees */
-    margin-left:250px;
-} 
-  .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
+  font-size: 50px;
+  color: #0095ff;
+  margin-left: 250px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: #ffffff ;
+  color: #ffffff;
+}
+
+.signal-section {
+  margin-bottom: 20px;
+  color: #ddd;
+}
+
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Ajusta el tamaño mínimo de la imagen */
+  gap: 10px;
+  border: #ffffff ;
+}
+
+img {
+  width: 50%;
+  height: 50px;
+  border: 5px solid #fff; /* Borde blanco */
+  border-radius: 10px; /* Borde redondeado opcional para las imágenes */
+}
+
+
+.custom-image {
+  width: 100px;
+  height: 130px; /* Ajusta la altura según tus preferencias */
+  object-fit: cover; /* para mantener la relación de aspecto */
+  object-position: center; /* centrar verticalmente */
+  margin: 0 auto; /* centrar horizontalmente */
+  border: none; /* o border: 0; para eliminar el borde */
   
-  .signal-section {
-    margin-bottom: 20px;
-  }
-  
-  .signal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-  }
-  
-  img {
-    width: 100%;
-    height: auto;
-    border: 1px solid #ddd; /* Borde opcional para las imágenes */
-    border-radius: 5px; /* Borde redondeado opcional para las imágenes */
-  }
-  .fixed-size-image {
-    width: 100%;
-    height: 150px; /* ajusta la altura según tus preferencias */
-    object-fit: cover; /* para mantener la relación de aspecto */
-  }
-  
+}
+/* page3.page.scss */
+
+ion-item.custom-item {
+  --background: #00000042; /* Establece el color que desees */
+  border: 10px;
+}
+
+

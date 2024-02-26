@@ -22,18 +22,21 @@
 <ion-content>
   <div id="barra">
     <ion-icon [routerLink]="['/page1']" name="arrow-back-outline" class="header-icon"></ion-icon>
-    <ion-icon name="help-circle-outline" class="header-icon2"></ion-icon>
+    <ion-icon (click)="showHelpModal()" name="help-circle-outline" class="header-icon2"></ion-icon>
   </div>
   <div *ngIf="data">
     <ion-grid>
-      <ion-row *ngFor="let key of getObjectKeys(data)">
-        <ion-col size="12">
+      
+      <ion-row *ngFor="let key of getObjectKeys(data)" style="border: 0;">
+        <ion-col size="12" style="border: 0;">
           <h2>{{ key }} - {{ data[key][0].tipo_senial }}</h2>
         </ion-col>
-        <ion-col size="6" size-md="6" size-lg="4" *ngFor="let item of data[key]">
-          <ion-item (click)="showImageDetail(item)">
-            <ion-img [src]="item.imagen" class="fixed-size-image"></ion-img>
+        <ion-col size="6" size-md="6" size-lg="4" *ngFor="let item of data[key]" class="custom-col">
+          
+          <ion-item class="custom-item" (click)="showImageDetail(item)">
+            <ion-img [src]="item.imagen" class="fixed-size-image custom-image"></ion-img>
           </ion-item>
+          
         </ion-col>
       </ion-row>
     </ion-grid>
