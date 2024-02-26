@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Tesis',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    cleartext: true
   }
 };
 

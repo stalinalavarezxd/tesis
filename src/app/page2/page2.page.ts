@@ -12,7 +12,7 @@ export class Page2Page implements OnDestroy {
   @ViewChild('video', { static: true }) video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
   private intervalId: any;
-  private captureInterval = 100;
+  private captureInterval = 1000;
   private mediaStream!: MediaStream;
   public detectionResults: any[] = [];
   private lastDrawnBoxes: any[] = [];

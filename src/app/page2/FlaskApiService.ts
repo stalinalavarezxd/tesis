@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class FlaskApiService {
-  private apiUrl = 'http://192.168.0.106:4000'; 
+  private apiUrl = 'http://10.52.79.142:4000'; 
 
   constructor(private http: HttpClient) {}
 
